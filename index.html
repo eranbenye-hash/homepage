@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eran Ben Yehoshua — Product & Growth Leader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Reset & tokens ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0e0e18;
+      --surface:     #16161f;
+      --surface-2:   #1e1e2c;
+      --surface-3:   #252538;
+      --border:      #2a2a3e;
+      --accent:      #e8a820;
+      --accent-dim:  rgba(232, 168, 32, 0.12);
+      --accent-glow: rgba(232, 168, 32, 0.25);
+      --text:        #dcdce8;
+      --text-muted:  #6868888;
+      --white:       #ffffff;
+      --font:        'Poppins', sans-serif;
+      --t:           0.25s ease;
+      --r:           14px;
+      --r-sm:        8px;
+      --sidebar-w:   300px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Layout ──────────────────────────────────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      gap: 24px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      align-items: start;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────────────── */
+    .sidebar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px 24px;
+      position: sticky;
+      top: 24px;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 16px;
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid var(--border);
+      display: block;
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 14px;
+      height: 14px;
+      background: #3cba6f;
+      border-radius: 50%;
+      border: 2px solid var(--surface);
+    }
+
+    .sidebar-name {
+      text-align: center;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .sidebar-title {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 14px;
+      color: var(--accent);
+      display: inline-block;
+      width: 100%;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    /* contacts toggle */
+    .contacts-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 6px 0;
+      user-select: none;
+      transition: color var(--t);
+    }
+    .contacts-toggle:hover { color: var(--accent); }
+    .contacts-toggle .chevron {
+      font-size: 11px;
+      transition: transform var(--t);
+    }
+    .contacts-toggle.open .chevron { transform: rotate(180deg); }
+
+    .contacts-list {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+    }
+    .contacts-list.open { max-height: 300px; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-item:last-child { border-bottom: none; }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .contact-info { overflow: hidden; }
+    .contact-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .contact-value {
+      font-size: 13px;
+      color: var(--white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .contact-value a { color: var(--accent); transition: opacity var(--t); }
+    .contact-value a:hover { opacity: .75; }
+
+    /* social */
+    .social-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--r-sm);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: background var(--t), border-color var(--t), transform var(--t);
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .social-btn:hover {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── Main ────────────────────────────────────────────────────── */
+    .main { min-width: 0; }
+
+    /* ── Navbar ──────────────────────────────────────────────────── */
+    .navbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 6px;
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 10px 8px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background var(--t), color var(--t);
+    }
+    .nav-btn:hover { color: var(--text); background: var(--surface-2); }
+    .nav-btn.active {
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid var(--accent-glow);
+    }
+
+    /* ── Article (tab panel) ─────────────────────────────────────── */
+    .article { display: none; }
+    .article.active { display: block; }
+
+    /* section heading */
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* ── About ───────────────────────────────────────────────────── */
+    .about-text {
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .about-text p { margin-bottom: 12px; }
+    .about-text strong { color: var(--accent); font-weight: 600; }
+
+    /* stat row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 16px;
+      text-align: center;
+      transition: border-color var(--t), transform var(--t);
+    }
+    .stat-card:hover {
+      border-color: var(--accent-glow);
+      transform: translateY(-3px);
+    }
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 20px;
+      transition: border-color var(--t), transform var(--t), background var(--t);
+    }
+    .service-card:hover {
+      border-color: var(--accent-glow);
+      background: var(--surface-2);
+      transform: translateY(-3px);
+    }
+    .service-icon {
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+    .service-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .service-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Resume ──────────────────────────────────────────────────── */
+    .timeline-section { margin-bottom: 36px; }
+    .timeline-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 6px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+    .timeline-date {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .timeline-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .timeline-org {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    /* skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .skill-item {}
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .skill-name { color: var(--text); }
+    .skill-pct  { color: var(--accent); }
+    .skill-bar {
+      height: 5px;
+      background: var(--surface-3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #f5c842);
+      border-radius: 3px;
+      width: 0;
+      transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── Portfolio ───────────────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .filter-btn {
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all var(--t);
+    }
+    .filter-btn:hover { color: var(--text); border-color: var(--text-muted); }
+    .filter-btn.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color var(--t), transform var(--t);
+    }
+    .project-card:hover {
+      border-color: var(--accent-glow);
+      transform: translateY(-4px);
+    }
+    .project-img {
+      height: 150px;
+      background: linear-gradient(135deg, var(--surface-2), var(--surface-3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.4));
+    }
+    .project-body { padding: 16px; }
+    .project-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .project-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .project-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── Contact ─────────────────────────────────────────────────── */
+    .contact-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px 24px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: var(--text-muted);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      outline: none;
+      transition: border-color var(--t);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-muted); }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { height: 130px; resize: vertical; }
+
+    .form-full { margin-bottom: 14px; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--r-sm);
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity var(--t), transform var(--t);
+      margin-top: 4px;
+    }
+    .submit-btn:hover { opacity: .9; transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); opacity: .8; }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0 20px;
+        align-items: start;
+      }
+      .avatar-wrap { margin: 0; }
+      .sidebar-name, .sidebar-title { text-align: left; }
+      .sidebar-title { width: auto; }
+      .sidebar-info { grid-column: 2; }
+      .sidebar-divider { grid-column: 1 / -1; }
+      .sidebar-contacts { grid-column: 1 / -1; }
+      .social-row { justify-content: flex-start; grid-column: 1 / -1; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar { grid-template-columns: 1fr; }
+      .avatar-wrap { margin: 0 auto 12px; }
+      .sidebar-name, .sidebar-title { text-align: center; }
+      .sidebar-title { width: 100%; }
+      .social-row { justify-content: center; }
+      .services-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .nav-btn { font-size: 12px; padding: 9px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── Sidebar ──────────────────────────────────────────────── -->
+  <aside class="sidebar">
+
+    <div class="avatar-wrap">
+      <img class="avatar" src="profile.jpeg" alt="Eran Ben Yehoshua"/>
+      <span class="status-dot" title="Available for work"></span>
+    </div>
+
+    <div class="sidebar-info">
+      <p class="sidebar-name">Eran Ben Yehoshua</p>
+      <span class="sidebar-title">Product Lead · Turn ideas into scalable products</span>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-contacts">
+      <div class="contacts-toggle" id="contacts-toggle">
+        <span>Contact Info</span>
+        <span class="chevron">▼</span>
+      </div>
+
+      <div class="contacts-list" id="contacts-list">
+        <div class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div class="contact-info">
+            <p class="contact-label">Email</p>
+            <p class="contact-value">
+              <a href="mailto:eranbenye@gmail.com">eranbenye@gmail.com</a>
+            </p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💼</div>
+          <div class="contact-info">
+            <p class="contact-label">LinkedIn</p>
+            <p class="contact-value">
+              <a href="https://www.linkedin.com/in/eran-ben-yehoshua/" target="_blank">/eran-ben-yehoshua</a>
+            </p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-info">
+            <p class="contact-label">Location</p>
+            <p class="contact-value">Tel Aviv, Israel</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🌐</div>
+          <div class="contact-info">
+            <p class="contact-label">Company</p>
+            <p class="contact-value">
+              <a href="https://noovox.com" target="_blank">noovox.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-row">
+        <a class="social-btn" href="https://www.linkedin.com/in/eran-ben-yehoshua/" target="_blank" title="LinkedIn">in</a>
+        <a class="social-btn" href="mailto:eranbenye@gmail.com" title="Email">✉</a>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── Main ─────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <button class="nav-btn active" data-target="about">About</button>
+      <button class="nav-btn" data-target="resume">Resume</button>
+      <button class="nav-btn" data-target="portfolio">Portfolio</button>
+      <button class="nav-btn" data-target="contact">Contact</button>
+    </nav>
+
+    <!-- ── ABOUT ──────────────────────────────────────────────── -->
+    <article class="article active" id="about">
+
+      <h2 class="section-title">About Me</h2>
+
+      <div class="about-text">
+        <p>
+          High-impact Product Leader with <strong>over a decade of experience</strong>
+          scaling B2C and B2B platforms. Expert in leveraging AI tools to accelerate
+          product prototyping, automate workflows, and define complex technical tasks.
+        </p>
+        <p>
+          Proven track record of turning engagement into revenue through
+          <strong>product-led growth</strong> and sophisticated monetization strategies —
+          from 100M+ install consumer apps to global B2B SaaS platforms.
+        </p>
+        <p>
+          Currently building <strong>Noovox</strong>, an AI-powered content platform
+          that helps executives amplify their voice and drive measurable business impact
+          through thought leadership.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-num">10+</span>
+          <span class="stat-label">Years in Product & Growth</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">100M+</span>
+          <span class="stat-label">App Installs Scaled</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">50+</span>
+          <span class="stat-label">Funnel Tests Executed</span>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <h2 class="section-title">What I Do</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">⚡</div>
+          <p class="service-name">Fast Prototyping & Execution</p>
+          <p class="service-desc">Rapid MVPs using AI-first workflows, vibe-coding tools, and prompt engineering to ship before the competition.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💰</div>
+          <p class="service-name">Monetization & Revenue Growth</p>
+          <p class="service-desc">Subscription models, paywall design, ad-tech partnerships, and LTV uplift — backed by 50+ funnel tests.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🤖</div>
+          <p class="service-name">AI-Powered Product Workflows</p>
+          <p class="service-desc">Integrating AI to automate task definition, cross-functional alignment, and UX analytics at startup speed.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <p class="service-name">Growth Systems & PLG</p>
+          <p class="service-desc">Marketing automation, attribution modelling, conversion funnels, and product-led growth loops that scale.</p>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- ── RESUME ─────────────────────────────────────────────── -->
+    <article class="article" id="resume">
+
+      <!-- Experience -->
+      <div class="timeline-section">
+        <h2 class="section-title">Experience</h2>
+        <p class="timeline-label">Work History</p>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <p class="timeline-date">2025 — Present</p>
+            <p class="timeline-title">Product Lead</p>
+            <p class="timeline-org">Noovox · Israel</p>
+            <p class="timeline-desc">
+              Leading product strategy for an AI-powered content platform. Rapidly prototyping
+              UX flows using AI tools, building a growth experimentation system with UX analytics
+              and funnel optimization, and automating startup processes via AI workflows.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <p class="timeline-date">2024 — 2025</p>
+            <p class="timeline-title">Consultant — Business & Product</p>
+            <p class="timeline-org">Sync.me · Israel</p>
+            <p class="timeline-desc">
+              Owned the growth and monetization roadmap for a global mobile SDK. Scaled SDK
+              adoption by optimizing conversion funnels and leveraging AI-assisted data analysis.
+              Developed multi-touch attribution models linking user behaviour with yield.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <p class="timeline-date">2021 — 2024</p>
+            <p class="timeline-title">Product Manager — Monetization Lead (B2C)</p>
+            <p class="timeline-org">Similarweb · Israel</p>
+            <p class="timeline-desc">
+              Directed monetization strategy using AI tools to model user segments and prototype
+              subscription conversion paths. Conducted 50+ funnel tests, driving measurable
+              uplift in ARPU and retention.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <p class="timeline-date">2019 — 2021</p>
+            <p class="timeline-title">Product Manager — Monetization</p>
+            <p class="timeline-org">CallApp · Israel</p>
+            <p class="timeline-desc">
+              Scaled a Caller ID app with 100M+ installs through product-led growth and
+              experimentation. Enhanced LTV by 25% by balancing UX with monetization.
+              Negotiated 15+ ad-tech partnerships for diversified revenue.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <p class="timeline-date">2016 — 2019</p>
+            <p class="timeline-title">Co-Founder</p>
+            <p class="timeline-org">Webintro · Adtech</p>
+            <p class="timeline-desc">
+              Launched and scaled a digital ad-tech agency, driving 7-figure annual revenue
+              via A/B tested ad placement and pricing. Built analytics infrastructure and
+              managed strategic partnerships.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="timeline-section">
+        <h2 class="section-title">Education</h2>
+        <p class="timeline-label">Academic Background</p>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <p class="timeline-date">2009 — 2012</p>
+            <p class="timeline-title">B.A. Business Administration and Management</p>
+            <p class="timeline-org">Ben-Gurion University of the Negev · Israel</p>
+          </div>
+
+          <div class="timeline-item">
+            <p class="timeline-date">2007 — 2009</p>
+            <p class="timeline-title">Professional Diploma, Media & Graphic Design</p>
+            <p class="timeline-org">St. George Institute · Melbourne, Australia</p>
+          </div>
+
+        </div>
+      </div>
+
+
+    </article>
+
+    <!-- ── PORTFOLIO ──────────────────────────────────────────── -->
+    <article class="article" id="portfolio">
+
+      <h2 class="section-title">Portfolio</h2>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="product">Product</button>
+        <button class="filter-btn" data-filter="growth">Growth</button>
+        <button class="filter-btn" data-filter="ai">AI</button>
+      </div>
+
+      <div class="portfolio-grid">
+
+        <div class="project-card" data-cat="product ai">
+          <div class="project-img">🚀</div>
+          <div class="project-body">
+            <p class="project-tag">Product · AI</p>
+            <p class="project-title">Noovox — Executive Growth OS</p>
+            <p class="project-desc">AI-powered platform helping executives amplify their thought leadership and drive measurable business impact.</p>
+          </div>
+        </div>
+
+        <div class="project-card" data-cat="growth product">
+          <div class="project-img">📱</div>
+          <div class="project-body">
+            <p class="project-tag">Growth · Product</p>
+            <p class="project-title">CallApp Monetization Scale</p>
+            <p class="project-desc">Scaled a 100M+ install Caller ID app via PLG and experimentation. Enhanced LTV by 25% and secured 15+ ad-tech partnerships.</p>
+          </div>
+        </div>
+
+        <div class="project-card" data-cat="growth ai">
+          <div class="project-img">🌐</div>
+          <div class="project-body">
+            <p class="project-tag">Growth · AI</p>
+            <p class="project-title">Similarweb Subscription Engine</p>
+            <p class="project-desc">Led B2C monetization strategy with AI-modelled user segments. Ran 50+ funnel tests, driving measurable uplift in ARPU and retention.</p>
+          </div>
+        </div>
+
+        <div class="project-card" data-cat="growth product">
+          <div class="project-img">🔗</div>
+          <div class="project-body">
+            <p class="project-tag">Growth · SDK</p>
+            <p class="project-title">Sync.me Global SDK Growth</p>
+            <p class="project-desc">Owned growth and monetization roadmap for a global mobile SDK. Built multi-touch attribution models linking user behaviour with yield.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- ── CONTACT ────────────────────────────────────────────── -->
+    <article class="article" id="contact">
+
+      <h2 class="section-title">Get In Touch</h2>
+
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="Your name"/>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Company</label>
+            <input type="text" placeholder="Company name"/>
+          </div>
+          <div class="form-group">
+            <label>Topic</label>
+            <select>
+              <option value="">Select a topic…</option>
+              <option>Advisory / Consulting</option>
+              <option>Speaking Engagement</option>
+              <option>Noovox Partnership</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-full form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me what you're working on…"></textarea>
+        </div>
+        <button class="submit-btn" type="button">Send Message →</button>
+      </div>
+
+    </article>
+
+  </main>
+</div>
+
+<script>
+  // ── Tab navigation ─────────────────────────────────────────────
+  const navBtns   = document.querySelectorAll('.nav-btn');
+  const articles  = document.querySelectorAll('.article');
+  let skillsAnimated = false;
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navBtns.forEach(b => b.classList.remove('active'));
+      articles.forEach(a => a.classList.remove('active'));
+      btn.classList.add('active');
+      const target = document.getElementById(btn.dataset.target);
+      target.classList.add('active');
+
+      // animate skill bars once when Resume tab opens
+      if (btn.dataset.target === 'resume' && !skillsAnimated) {
+        skillsAnimated = true;
+        setTimeout(() => {
+          document.querySelectorAll('.skill-fill').forEach(bar => {
+            bar.style.width = bar.dataset.pct + '%';
+          });
+        }, 100);
+      }
+    });
+  });
+
+  // ── Contacts toggle ────────────────────────────────────────────
+  const toggle = document.getElementById('contacts-toggle');
+  const list   = document.getElementById('contacts-list');
+
+  toggle.addEventListener('click', () => {
+    const open = list.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+  });
+
+  // ── Portfolio filter ───────────────────────────────────────────
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projects   = document.querySelectorAll('.project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      projects.forEach(card => {
+        const cats = card.dataset.cat || '';
+        card.style.display = (f === 'all' || cats.includes(f)) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
